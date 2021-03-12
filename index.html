@@ -10,30 +10,36 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
 </head>
 <body>
-    <div class="row no-gutters">
+    <div class="row">
     <header class="col-12 container-fluid text-light bg-dark sticky-top flex-column">
             <h1 class="text-center">
                 WeatherBoard
             </h1>
     </header>
     <main class="col-12 col-lg-9 d-flex flex-column">
-        <div class="m-5 row justify-content-between">
-            <div class="row col-auto bg-dark text-light">
+        <div class="row justify-content-between">
+            <!-- search section start -->
+            <div class="row col-3 bg-dark text-light">
                 <form class="row mb-3" id="city-search">
-                    <label for="city-search" class="form-label">Search for a City</label>
-                    
+                    <label for="city-search" class="form-label text-center">Search for a City</label>
                         <input type="text" placeholder="City Name" id="city-name" class="form-control" autofocus="true">
                         <button type="submit" class="btn btn-primary text-light">
                             <i class="bi bi-search"></i>
                         </button>
                     
                     </form>
-                    <div class="list-group" id="recent">
+                    <img src="http://openweathermap.org/img/wn/10d@2x.png" alt="" srcset="">
+                    <!-- search section end -->
+                    <!-- recents section start -->
+                    <div class="list-group bg-dark" id="recent">
 
                     </div>
             </div>
-            <div class="col-10" id="dashboard">
+        <!-- recents section end -->
+        <!-- weather dashboard start -->
+            <div class="col-9" id="dashboard">
             </div>
+            <!-- weather Dashboard end  -->
         </div>
       
     </main>
