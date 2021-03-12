@@ -40,7 +40,7 @@ var saveCities = function() {
 
 var getWeather = function(cityName) {
     // use the url to grab lat and lon from location searched.
-    var locApiUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=${apiKey}`;
+    var locApiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=imperial&appid=${apiKey}`;
     // use this api to grab current weather from location searched.
     
     fetch(locApiUrl).then(function(response) {
