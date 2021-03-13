@@ -91,7 +91,7 @@ var getWeather = function(cityName) {
             // gather city name from first api call, name is not included in second call
                 cityNameResponse = data.city.name;
             
-                var dateOutput = Date.UTC(data.list[0].dt_txt);
+                var dateOutput = [] = Date(data.list[0].dt_txt).toString().split(' ', 4).join(' ');
                 
                 console.log(dateOutput);
             
@@ -189,7 +189,7 @@ var createWeatherCard = function(weather) {
         tempicon.src = "./assets/images/50n.png";
     }
     
-    titleEl.textContent = `${cityNameResponse} (${currentDate})`;
+    titleEl.textContent = `${cityNameResponse} - ${currentDate}`;
     
     temperature.appendChild(tempicon);
     weatherDetails.appendChild(temperature);
@@ -213,10 +213,11 @@ var createWeatherCard = function(weather) {
     dashboardEl.appendChild(fiveDay);
     
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < weather.daily.length; i++) {
+        console.log(weather.daily);
         var forecastCard = document.createElement("div");
         forecastCard.className = "card";
-        forecastCard.style = "width: 12rem;"
+        forecastCard.style = "width: 18rem;"
         var forecastBody = document.createElement("div");
         forecastBody.className = "card-body";
         var forecastDetails = document.createElement("div");
@@ -232,7 +233,7 @@ var createWeatherCard = function(weather) {
         forecastHumidity.className = "list-item";
         var forecastUV = document.createElement("p");
         forecastUV.className = "list-item";
-        forecastTitle.textContent = Date.UTC(weather.daily[i].dt);
+        forecastTitle.textContent = Date(weather.daily[i].dt).toString().split(' ', 4).join(' ');
         forecastTemp.textContent = `Temperature: ${Math.floor(weather.daily[i].temp.day)}`;
         forecastFeelsLike.textContent = `Feels Like: ${Math.floor(weather.daily[i].feels_like.day)}`;
         forecastHumidity.textContent = `Humidity: ${Math.floor(weather.daily[i].humidity)}`;
