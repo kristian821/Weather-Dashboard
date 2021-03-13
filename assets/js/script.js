@@ -119,6 +119,8 @@ var getWeather = function(cityName) {
 };
 
 var createWeatherCard = function(weather) {
+    cityNameInputEl.value = "";
+
     // create dashboard view for loaction
     var cityCard = document.createElement("div")
     cityCard.className = "card";
@@ -320,7 +322,7 @@ var formSubmitHandler = function(event) {
 
     if (cityName) {
         getWeather(cityName);
-        cityNameInputEl.value = "";
+        
         
         saveCities();
     } else {
