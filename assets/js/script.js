@@ -202,9 +202,9 @@ var createWeatherCard = function(weather) {
     cardBody.appendChild(weatherDetails);
     cityCard.appendChild(cardBody);
 
-    var fiveDay = document.createElement("div");
-    fiveDay.className = "list-group-horizontal fs-1";
-    fiveDay.textContent = "5-Day forecast: "
+    var fiveDay = document.createElement("ul");
+    fiveDay.classList = "list-group list-group-horizontal-lg";
+    fiveDay.innerHTML = "<h2 class='list-group-item flex-fill'>5-Day Forecast: </h2>"
 
 
    
@@ -215,16 +215,16 @@ var createWeatherCard = function(weather) {
     dashboardEl.appendChild(fiveDay);
     
 
-    for (var i = 0; i < weather.daily.length; i++) {
-        var forecastCard = document.createElement("div");
-        forecastCard.className = "card";
-        forecastCard.style = "width: 18rem;"
+    for (var i = 0; i < 5; i++) {
+        var forecastCard = document.createElement("li");
+        forecastCard.classList = "list-group-item card";
+        
         var forecastBody = document.createElement("div");
         forecastBody.className = "card-body";
         var forecastDetails = document.createElement("div");
         forecastDetails.classList = "card-text list-group";
         var forecastTitle = document.createElement("p");
-        forecastTitle.classList = "card-title fs-2";
+        forecastTitle.classList = "card-title fs-3";
         var forecastTemp = document.createElement("p");
         forecastTemp.className = "list-item";
         var forecastIcon = document.createElement("img");
@@ -295,15 +295,11 @@ var createWeatherCard = function(weather) {
         forecastBody.appendChild(forecastDetails);
         forecastCard.appendChild(forecastBody);
 
-        dashboardEl.appendChild(forecastCard);
-        return;
+        fiveDay.appendChild(forecastCard);
+        
 
     }
-console.log(weather.daily[0].temp.day);
-console.log(weather.daily[1].temp.day);
-console.log(weather.daily[2].temp.day);
-console.log(weather.daily[3].temp.day);
-console.log(weather.daily[4].temp.day);
+
     saveCities();
 };
 
@@ -313,7 +309,6 @@ var recentCitiesCard = function(cityName) {
 
     titleEl.textContent = cityName;
 
-    console.log("Did it work?");
     recentsEl.appendChild(titleEl);
     
 };
