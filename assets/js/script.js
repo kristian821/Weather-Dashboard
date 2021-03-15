@@ -30,7 +30,18 @@ var mistNight = "./assets/images/50n.png";
 
 var city = [];
 
-
+var loadRecents = function() {
+    var recentCity = JSON.parse(localStorage.getItem("city"));
+    if (!recentCity) {
+        return false;
+    } 
+    
+    
+    for (var i = 0; i < recentCity.length; i++) {
+        recentCitiesCard(recentCity[i]);
+    }
+    
+};
 
 var saveRecents = function() {
     localStorage.setItem("city", JSON.stringify(city));
@@ -302,18 +313,7 @@ var buttonEventHandler = function(event) {
     getWeather(location);
 }
 
-var loadRecents = function() {
-    var recentCity = JSON.parse(localStorage.getItem("city"));
-    if (!recentCity) {
-        return false;
-    } 
-    
-    
-    for (var i = 0; i < recentCity.length; i++) {
-        recentCitiesCard(recentCity[i]);
-    }
-    
-};
+
 
 loadRecents();
 searchFormEl.addEventListener("submit", formSubmitHandler);
