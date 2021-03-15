@@ -3,75 +3,36 @@ var dashboardEl = document.querySelector("#dashboard");
 var searchFormEl = document.querySelector("#city-search");
 var cityNameInputEl = document.querySelector("#city-name");
 var recentsEl = document.querySelector("#recents");
-var cityArr = [];
 var part = "minutely,hourly,alerts";
 var cityNameResponse = "";
-var cityID = "";
+
 var currentDate = "";
 var icon = "";
 var description = "";
+var clearSkyDay = "./assets/images/01d.png";
+var clearSkyNight = "./assets/images/01n.png";
+var fewCloudsDay = "./assets/images/02d.png";
+var fewCloudsNight = "./assets/images/02n.png";
+var scatteredCloudsDay = "./assets/images/03d.png";
+var scatteedCloudsNight= "./assets/images/03n.png";
+var brokenCloudsDay = "./assets/images/04d.png";
+var brokenCloudsNight= "./assets/images/04n.png";
+var showerRainDay = "./assets/images/09d.png";
+var showerRainNight= "./assets/images/09n.png";
+var rainDay = "./assets/images/10d.png";
+var rainNight = "./assets/images/10n.png";
+var thunderstormDay = "./assets/images/11d.png";
+var thunderstormNight = "./assets/images/11n.png";
+var snowDay = "./assets/images/13d.png";
+var snowNight = "./assets/images/13n.png";
+var mistDay = "./assets/images/50d.png";
+var mistNight = "./assets/images/50n.png";
 
-        var clearSkyDay = "./assets/images/01d.png";
-
-        var clearSkyNight = "./assets/images/01n.png";
-
-        var fewCloudsDay = "./assets/images/02d.png";
-
-        var fewCloudsNight = "./assets/images/02n.png";
-       
-        var scatteredCloudsDay = "./assets/images/03d.png";
-   
-        var scatteedCloudsNight= "./assets/images/03n.png";
-       
-        var brokenCloudsDay = "./assets/images/04d.png";
-      
-        var brokenCloudsNight= "./assets/images/04n.png";
-       
-        var showerRainDay = "./assets/images/09d.png";
-   
-        var showerRainNight= "./assets/images/09n.png";
-      
-        var rainDay = "./assets/images/10d.png";
-     
-        var rainNight = "./assets/images/10n.png";
-
-        var thunderstormDay = "./assets/images/11d.png";
-
-        var thunderstormNight = "./assets/images/11n.png";
-
-        var snowDay = "./assets/images/13d.png";
-
-        var snowNight = "./assets/images/13n.png";
-
-        var mistDay = "./assets/images/50d.png";
-
-        var mistNight = "./assets/images/50n.png";
-
-  
-
-var city = function(id, name) {
-    this.id = id;
-    this.name = name;
-}
+var city = [];
 
 
 
-// var loadCities = function() {
-//     cityArr = JSON.parse(localStorage.getItem("city"));
-
-//     if (!cityArr) {
-//         cityArr = [];
-//         return;
-//     } else {
-//         console.log(cityArr.name.length)
-//         // for (var i = 0; i < ; i++) {
-//         //         console.log(cityArr.name[i]);
-//         // }
-        
-//     }
-// }
-
-var saveCities = function() {
+var saveRecents = function() {
     localStorage.setItem("city", JSON.stringify(city));
 }
 
@@ -87,13 +48,13 @@ var getWeather = function(cityName) {
                 // find lat and lon and create variables to use in next api call
                var lat = data.city.coord.lat;
                var lon = data.city.coord.lon;
-
             // gather city name from first api call, name is not included in second call
                 cityNameResponse = data.city.name;
+               
             
                 var dateOutput = Date(data.list[0].dt_txt).toString().split(' ', 4).join(' ');
                 
-                
+                city.push(cityNameResponse);
             
               
                currentDate = dateOutput;
@@ -119,11 +80,13 @@ var getWeather = function(cityName) {
 };
 
 var createWeatherCard = function(weather) {
+    dashboardEl.innerHTML = "";
     cityNameInputEl.value = "";
+    loadRecents();
 
     // create dashboard view for loaction
     var cityCard = document.createElement("div")
-    cityCard.className = "card";
+    cityCard.classList = "card bg-info text-light";
     var cardBody = document.createElement("div")
     cardBody.className = "card-body";
     // create title element
@@ -131,16 +94,17 @@ var createWeatherCard = function(weather) {
     titleEl.classList = "card-title fs-2";
     // create container for other weather details
     var weatherDetails = document.createElement("ul");
-    weatherDetails.classList = "card-text list-group";
+    weatherDetails.classList = "card-text list-group list-group-horizontal-lg";
     var temperature = document.createElement("p");
-    temperature.className = "list-item";
+    temperature.className = "list-item m-3";
     var tempicon = document.createElement("img");
+    tempicon.className = "m-3"
     var feelsLike = document.createElement("p");
-    feelsLike.className = "list-item";
+    feelsLike.className = "list-item m-3";
     var humidity = document.createElement("p");
-    humidity.className = "list-item";
+    humidity.className = "list-item m-3";
     var uvIndex = document.createElement("p");
-    uvIndex.className = "list-item";
+    uvIndex.className = "list-item m-3";
 
     // set text of weather details equal to data from api
     temperature.innerHTML = `Temperature: ${Math.floor(weather.current.temp)}`;
@@ -204,7 +168,7 @@ var createWeatherCard = function(weather) {
 
     var fiveDay = document.createElement("ul");
     fiveDay.classList = "list-group list-group-horizontal-lg";
-    fiveDay.innerHTML = "<h2 class='list-group-item flex-fill'>5-Day Forecast: </h2>"
+    fiveDay.innerHTML = "<h2 class='list-group-item flex-fill bg-secondary text-light'>5-Day Forecast: </h2>"
 
 
    
@@ -217,7 +181,7 @@ var createWeatherCard = function(weather) {
 
     for (var i = 0; i < 5; i++) {
         var forecastCard = document.createElement("li");
-        forecastCard.classList = "list-group-item card";
+        forecastCard.classList = "list-group-item card bg-primary text-light";
         
         var forecastBody = document.createElement("div");
         forecastBody.className = "card-body";
@@ -299,17 +263,24 @@ var createWeatherCard = function(weather) {
         
 
     }
-
-    saveCities();
+    console.log("1");
+    saveRecents();
+    console.log("2");
 };
 
 var recentCitiesCard = function(cityName) {
-    var titleEl = document.createElement("li");
-    titleEl.className = "list-item";
+    var cityButton = document.createElement("a");
+    cityButton.classList = "btn";
 
-    titleEl.textContent = cityName;
+    var buttonEl = document.createElement("li");
+    buttonEl.setAttribute("data-location", cityName);
+    buttonEl.classList = "list-group-item";
+    buttonEl.textContent = cityName;
+    cityButton.appendChild(buttonEl);
+    recentsEl.appendChild(cityButton);
 
-    recentsEl.appendChild(titleEl);
+    
+    saveRecents();
     
 };
 
@@ -320,14 +291,30 @@ var formSubmitHandler = function(event) {
 
     if (cityName) {
         getWeather(cityName);
-        
-        
-        saveCities();
     } else {
         alert("Please enter a city name");
     }
-    dashboardEl.innerHTML = "";
+   
 }
 
-// loadCities();
+var buttonEventHandler = function(event) {
+    var location = event.target.getAttribute("data-location");
+    getWeather(location);
+}
+
+var loadRecents = function() {
+    var recentCity = JSON.parse(localStorage.getItem("city"));
+    if (!recentCity) {
+        return false;
+    } 
+    
+    
+    for (var i = 0; i < recentCity.length; i++) {
+        recentCitiesCard(recentCity[i]);
+    }
+    
+};
+
+loadRecents();
 searchFormEl.addEventListener("submit", formSubmitHandler);
+recentsEl.addEventListener("click", buttonEventHandler);
